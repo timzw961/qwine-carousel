@@ -1,21 +1,31 @@
 import styles from "./page.module.css";
-import ProductCard from "./components/ProductCard";
+import ProductCarousel from "./components/ProductCarousel";
 import { Product } from "./types";
-import data from "../../public/data.json";
 
 export const dynamic = "force-dynamic";
 
+const fetchProducts = async (): Promise<Product[]> => {
+  const response = await fetch("http://localhost:3000/data.json");
+  if (!response.ok) {
+    throw new Error("Failed to fetch products");
+  }
+  const data = await response.json();
+  return data.data.search.products as Product[];
+};
+
 const Page = async () => {
-  const products: Product[] = data.data.search.products as Product[];
+  let products: Product[] = [];
+
+  try {
+    products = await fetchProducts();
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
 
   return (
-    <div className={styles.page}>
-      <main>
-        {products.map((product, index) => (
-          <ProductCard key={index} product={product} />
-        ))}
-      </main>
-    </div>
+    <main className={styles.page}>
+      <ProductCarousel products={products} />
+    </main>
   );
 };
 

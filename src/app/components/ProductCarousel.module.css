@@ -1,0 +1,9 @@
+.carousel {
+  padding: 20px;
+}
+
+/* Override the global slick styles */
+:global(.slick-prev:before),
+:global(.slick-next:before) {
+  color: black !important; 
+}
