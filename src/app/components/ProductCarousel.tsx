@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Slider from "react-slick";
+import Slider, { Settings } from "react-slick";
 import ProductCard from "./ProductCard";
 import { Product } from "../types";
 import "slick-carousel/slick/slick.css";
@@ -10,20 +10,19 @@ import styles from "./ProductCarousel.module.css";
 
 export const dynamic = "force-dynamic";
 
+export type SliderSettings = Settings & {
+  className?: string;
+};
+
 interface ProductCarouselProps {
   products: Product[];
+  settings: SliderSettings;
 }
 
-export const ProductCarousel = ({ products }: ProductCarouselProps) => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 0,
-  };
-
+export const ProductCarousel = ({
+  products,
+  settings,
+}: ProductCarouselProps) => {
   return (
     <div className={styles.carousel}>
       <Slider {...settings}>

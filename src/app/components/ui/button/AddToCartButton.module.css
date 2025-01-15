@@ -1,0 +1,30 @@
+.button {
+  background-color: #dc2626;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.addToCart {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.button:hover {
+  background-color: #b91c1c;
+}
+
+.cartIcon {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}

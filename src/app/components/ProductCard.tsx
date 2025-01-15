@@ -1,8 +1,7 @@
-"use client";
-
 import React from "react";
 import { Product } from "../types";
 import styles from "./ProductCard.module.css";
+import AddToCartButton from "./ui/button/AddToCartButton";
 
 interface ProductCardProps {
   product: Product;
@@ -18,9 +17,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     currentPrice,
   } = product;
 
-  const addToCart = async () => {
-    // add to cart functionality
-  };
+  const formatPrice = (price: number) => `$${price.toFixed(2)}`;
 
   return (
     <div className={styles.card}>
@@ -34,68 +31,42 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       />
 
       <div className={styles.priceSection}>
-        {wasPrice ? (
-          <>
-            <div className={styles.priceWrapper}>
+        <div className={styles.priceWrapper}>
+          {wasPrice ? (
+            <>
               <p className={styles.wasPrice}>
-                ${wasPrice.cashPrice.amount.toFixed(2)}
+                {formatPrice(wasPrice.cashPrice.amount)}
               </p>
               <p className={styles.salePrice}>
-                ${currentPrice.cashPrice.amount.toFixed(2)}
+                {formatPrice(currentPrice.cashPrice.amount)}
               </p>
-            </div>
-            <div className={styles.pointsPriceAndButtonSection}>
-              <div className={styles.pointsWrapper}>
-                <p>
-                  Or{" "}
-                  <span className={styles.salePrice}>
-                    {" "}
-                    {currentPrice.pointsPrice.amount} PTS{" "}
-                  </span>
-                </p>
-                <p className={styles.wasPrice}>
-                  {wasPrice.pointsPrice.amount} PTS
-                </p>
-              </div>
-              <button className={styles.button}>
-                <span className={styles.addToCart}>
-                  ADD{" "}
-                  <img
-                    src="/cart.svg"
-                    alt="Cart Icon"
-                    className={styles.cartIcon}
-                  />
-                </span>
-              </button>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className={styles.priceWrapper}>
-              <p className={styles.currentPrice}>
-                ${currentPrice.cashPrice.amount.toFixed(2)}
+            </>
+          ) : (
+            <p className={styles.currentPrice}>
+              {formatPrice(currentPrice.cashPrice.amount)}
+            </p>
+          )}
+        </div>
+
+        <div className={styles.pointsPriceAndButtonSection}>
+          <div className={styles.pointsWrapper}>
+            {" "}
+            <p>
+              Or{" "}
+              <span
+                className={wasPrice ? styles.salePrice : styles.currentPoints}
+              >
+                {currentPrice.pointsPrice.amount} PTS{" "}
+              </span>
+            </p>
+            {wasPrice && (
+              <p className={styles.wasPrice}>
+                {wasPrice.pointsPrice.amount} PTS
               </p>
-            </div>
-            <div className={styles.pointsPriceAndButtonSection}>
-              <p>
-                Or{" "}
-                <span className={styles.currentPoints}>
-                  {currentPrice.pointsPrice.amount} PTS{" "}
-                </span>
-              </p>
-              <button className={styles.button} onClick={addToCart}>
-                <span className={styles.addToCart}>
-                  ADD{" "}
-                  <img
-                    src="/cart.svg"
-                    alt="Cart Icon"
-                    className={styles.cartIcon}
-                  />
-                </span>
-              </button>
-            </div>
-          </>
-        )}
+            )}
+          </div>
+          <AddToCartButton />
+        </div>
       </div>
     </div>
   );
